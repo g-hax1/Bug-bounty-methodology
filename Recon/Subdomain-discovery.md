@@ -40,6 +40,9 @@ target.com/
 │       ├── notes.md
 │       ├── interesting-endpoints.md
 │       └── interesting_subdomain_name/
+│           ├── all-endpoints.txt
+│           ├── interesting-endpoints.md
+│           ├── cloud_storage.md
 │           ├── authentication.md
 │           ├── authorization.md
 │           ├── business-logic.md
@@ -162,7 +165,28 @@ This will focus on enumerating as many values as possible from individual subdom
     - `grep "sub.target.com" vulnerability_types_files.txt`
 
 2. Vist the domain and use the wapplyzer extention to discover information about the sites tech stack and save it to the information file.
-3. 
+
+3. Run `httpx`, `katana` and burpsuite web crawler on the site again to enumerate extra attack surface.
+    Commands:
+    - `httpx -d target.com -title -tech-detect -status-code -follow-redirects -web-server -ip -cdn -asn`
+    - `katana -u target.com -d 8 -headless -js-crawl -jsluice -kf all`
+    - Run burpsuite web crawler on the site and save output to a file.
+
+4. Scan the subdomain with `cloud_enum` to enumerate cloud storage.
+    Commands:
+    - `cd /Hacking/tools/cloud_enum`
+    - `uv run python cloud_enum.py -k company_name`
+    - `aws s3 ls s3://bucket_name --no-sign-request --recursive` For listing files in exposed aws buckets.
+    - `aws s3 cp s3://bucket_name/path --no-sign-request` For listing file content in exposed aws buckets.
+
+5. Do further google dorking for sensitive information.
+    Tools:
+    - https://pentest-tools.com/information-gathering/google-hacking
+    - Refer to https://ahrefs.com/blog/google-advanced-search-operators/ for any other relevant google search operators.
+
+6. Enumerate extra parameters for testing.
+    Commands:
+    - `ffuf -u target.com/page?FUZZ=test -w params.txt`
 
 
 
