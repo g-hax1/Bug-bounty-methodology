@@ -31,9 +31,30 @@ target.com/
 │   │   │  └── secrets.txt
 │   │   └── vulnerability_scans/
 │   │       ├── subdomains_scan.md
-│   │       ├── vulnerability_type_domains.txt
+│   │       ├── nmap_scan.txt
 │   │       ├── subdomain_takeover_scan.txt
-│   │       └── nmap_scan.txt
+│   │       └── vulnerabilitys/
+│   │           ├── xss.txt
+│   │           ├── aws-keys.txt
+│   │           ├── cors.txt
+│   │           ├── debug-pages.txt
+│   │           ├── debug-logic.txt
+│   │           ├── firebase.txt
+│   │           ├── idor.txt
+│   │           ├── http-auth.txt
+│   │           ├── img-traversal.txt
+│   │           ├── interestingEXT.txt
+│   │           ├── interestingparams.txt
+│   │           ├── interestingsubs.txt
+│   │           ├── lfi.txt
+│   │           ├── rce.txt
+│   │           ├── redirect.txt
+│   │           ├── s3-buckets.txt
+│   │           ├── sqli.txt
+│   │           ├── ssrf.txt
+│   │           ├── ssti.txt
+│   │           ├── takeovers.txt
+│   │           └── php-sinks.txt
 │   │
 │   └── manual-recon/
 │       │
@@ -104,7 +125,7 @@ This will focus on enumerating as much attack surface as possible.
 
 2. Next run`dnsx` to bruteforce any more domains through dns bruteforcing. This step is required as some domains may not be found by subfinder if they are not in Certificate transparency logs. 
     Commands:
-    - `dnsx -d target.com -w /home/g/Hacking/hacking-map/Bug bounty methodology/Recon/namelist.txt -asn -cdn -all > dns_bruteforce_domains.txt`
+    - `dnsx -d target.com -w "/home/g/Hacking/hacking-map/Bug bounty methodology/Recon/namelist.txt" -asn -cdn -all > dns_bruteforce_domains.txt`
 3. After this, go to the website https://subdomainfinder.c99.nl/ and download the list of subdomains for your target.
 4. Next is to enumerate as many vhosts (virtual hosts) as possible
     Commands:
@@ -184,9 +205,9 @@ This will focus on enumerating as many values as possible from individual subdom
     - https://pentest-tools.com/information-gathering/google-hacking
     - Refer to https://ahrefs.com/blog/google-advanced-search-operators/ for any other relevant google search operators.
 
-6. Enumerate extra parameters for testing.
+6. Enumerate extra parameters for testing. Can do this on multiple endpoints.
     Commands:
-    - `ffuf -u target.com/page?FUZZ=test -w params.txt`
+    - `ffuf -u target.com/page?FUZZ=test -w "/home/g/Hacking/hacking-map/Bug bounty methodology/Recon/raft-large-words.txt"`
 
 
 
