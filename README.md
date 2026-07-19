@@ -15,22 +15,31 @@ target.com/
 │   │   │
 │   │   ├── notes.md
 │   │   ├── domains.txt
+│   │   ├── domains-subfinder.txt
+│   │   ├── domains-dnsx.txt
+│   │   ├── domains-manual.txt
 │   │   ├── live.txt
-│   │   ├── live_with_info.txt
-│   │   ├── ffuf_vhosts.txt
+│   │   ├── live-with-info.txt
+│   │   ├── live-hosts.txt
+│   │   ├── ffuf-vhosts.json
 │   │   ├── dorks.txt
 │   │   ├── endpoints/
 │   │   │  ├── endpoints.txt
+│   │   │  ├── params-urls.txt
 │   │   │  └── params.txt
 │   │   ├── javascript/
-│   │   │  ├── js-files_endpoints.txt
+│   │   │  ├── js-files.txt
+│   │   │  ├── live-js-files.txt
+│   │   │  ├── links.txt
 │   │   │  ├── secrets.txt
 │   │   │  ├── source-maps.txt
-│   │   │  └── js-files/
+│   │   │  ├── api-findings.txt
+│   │   │  ├── client-side-findings.txt
+│   │   │  ├── js-files/
+│   │   │  └── source-maps/
 │   │   └── vulnerability_scans/
-│   │       ├── subdomains_scan.md
-│   │       ├── nmap_scan.txt
-│   │       ├── subdomain_takeover_scan.txt
+│   │       ├── nmap-scan.txt
+│   │       ├── subdomain-takeover-scan.txt
 │   │       └── vulnerabilitys/
 │   │           ├── xss.txt
 │   │           ├── aws-keys.txt
