@@ -130,9 +130,48 @@ target.com/
 
 ### Setup
 
-These are all the tools used in this process and how to set them up accordingly.
+This methodology takes place in a Linux mint environment (but will most likely work on most linux distros) and command line utils. Use each project's own documentation for installation and usage.
 
+#### Core recon tools
 
+| Tool | Used for | Official download or installation guide |
+|---|---|---|
+| Subfinder | Passive subdomain discovery | [ProjectDiscovery Subfinder](https://github.com/projectdiscovery/subfinder) |
+| dnsx | DNS resolution and subdomain brute-forcing | [ProjectDiscovery dnsx](https://github.com/projectdiscovery/dnsx) |
+| httpx | HTTP probing and technology fingerprinting | [ProjectDiscovery HTTPX](https://github.com/projectdiscovery/httpx) |
+| Katana | Web crawling and JavaScript-aware endpoint discovery | [ProjectDiscovery Katana](https://github.com/projectdiscovery/katana) |
+| ffuf | Virtual-host and parameter discovery | [ffuf](https://github.com/ffuf/ffuf) |
+| GAU | Historical URL discovery | [getallurls](https://github.com/lc/gau) |
+| gf | URL-pattern filtering | [gf](https://github.com/tomnomnom/gf) |
+| Nmap | Permitted network-service discovery | [Nmap download and guide](https://nmap.org/download.html) |
+| Subzy | Subdomain-takeover checks | [Subzy](https://github.com/PentestPad/subzy) |
+
+#### JavaScript and technology-recon tools
+
+| Tool | Used for | Official download or installation guide |
+|---|---|---|
+| js-beautify | Beautifying JavaScript before review | [js-beautify](https://github.com/beautifier/js-beautify) |
+| LinkFinder | Extracting links and endpoints from JavaScript | [LinkFinder](https://github.com/GerbenJavado/LinkFinder) |
+| jq | Processing JSON and source maps | [jq downloads](https://jqlang.org/download/) |
+| WhatWeb | Additional technology fingerprinting | [WhatWeb](https://github.com/urbanadventurer/WhatWeb) |
+| Wappalyzer browser extension | Manual browser-side technology identification | [Wappalyzer download](https://www.wappalyzer.com/download/) |
+| Burp Suite | Manual proxying and authenticated crawling | [PortSwigger Burp Suite](https://portswigger.net/burp) |
+
+#### Cloud and runtime dependencies
+
+| Tool | Used for | Official download or installation guide |
+|---|---|---|
+| cloud_enum | Cloud-storage discovery | [cloud_enum](https://github.com/initstring/cloud_enum) |
+| AWS CLI | Reviewing explicitly authorised S3 buckets and objects | [AWS CLI installation guide](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) |
+| uv | Running cloud_enum in its Python environment | [uv installation guide](https://docs.astral.sh/uv/getting-started/installation/) |
+| Python 3 | LinkFinder and cloud_enum runtime | [Python downloads](https://www.python.org/downloads/) |
+| Node.js and npm | js-beautify runtime | [Node.js downloads](https://nodejs.org/en/download) |
+
+#### Utils and wordlists
+
+The commands `bash`, `curl`, `wget`, `grep`, `sed`, `awk`, `find`, `xargs`, `sort`, `sha256sum`, and `file` are usually available from the Linux distro's standard repositories. Install any that are missing through your distro's package manager.
+
+`WhatWeb`, `Wappalyzer`, `Burp Suite`, `cloud_enum`, the AWS CLI, and `uv` are only needed for the methodology sections that use them. The core reconnaissance and JavaScript sections need the remaining listed tools.
 
 ---
 

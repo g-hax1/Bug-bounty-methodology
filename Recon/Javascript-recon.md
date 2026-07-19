@@ -33,8 +33,7 @@ Run these commands from `target.com/recon/automatic-recon/javascript/`. The cano
     Commands:
     - `find js-files -type f -name '*.js' -exec sh -c 'js-beautify "$1" -o "$1.tmp" && mv "$1.tmp" "$1"' _ {} \;`
 
-5. Find dynamically loaded javascript chunks.
-    Modern applications often load extra chunks only after a user visits a page or uses a feature.
+5. Find dynamically loaded javascript chunks. Modern applications often load extra chunks only after a user visits a page or uses a feature.
     Commands:
     - Open the authorised target in a browser or intercepting proxy and use the application normally.
     - In the Network tab, filter for `JS`, copy or export the requested javascript URLs, and save them to `dynamic-js-files.txt`.
