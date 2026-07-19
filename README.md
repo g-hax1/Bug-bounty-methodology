@@ -23,6 +23,11 @@ target.com/
 │   │   ├── live-hosts.txt
 │   │   ├── ffuf-vhosts.json
 │   │   ├── dorks.txt
+│   │   ├── technology/
+│   │   │  ├── httpx.jsonl
+│   │   │  ├── technology-inventory.tsv
+│   │   │  ├── technology-leads.txt
+│   │   │  └── whatweb.txt
 │   │   ├── endpoints/
 │   │   │  ├── endpoints.txt
 │   │   │  ├── params-urls.txt
