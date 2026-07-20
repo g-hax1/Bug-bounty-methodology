@@ -124,25 +124,44 @@ This phase examines one authorised subdomain in detail and preserves its context
     - Put client-side libraries, browser storage, service workers, source-map findings, and DOM data flows in `javascript-review.md`.
     - Put user journeys, feature flags, integrations, payments, invitations, and state-changing actions in `business-logic.md`.
 
-4. Crawl the host again with its known context and run the JavaScript methodology on newly discovered files.
+4. Discover and document API specifications, schemas, and real-time protocols. Treat every discovered route, field, operation, and event name as a lead; do not invoke mutations, state-changing RPC methods, or WebSocket events merely to test whether they exist. Check common API documentation and specification paths, baselining normal responses first and using the programme's approved rate limit.
+    Commands:
+    - `for path in /openapi.json /openapi.yaml /swagger.json /swagger.yaml /api-docs /api-docs.json /v1/openapi.json /v2/api-docs /swagger-ui /swagger-ui/index.html /api/swagger.json /docs /redoc; do curl -sS -o "api-spec-$(echo "$path" | tr '/' '_').txt" -w "%{http_code}\t%{content_type}\t%{size_download}\t$path\n" "https://sub.target.com$path"; done > api-spec-probes.tsv`
+    - Review `api-spec-probes.tsv` and retain only confirmed documentation or specification responses in `api-notes.md`. Save JSON or YAML specifications using meaningful names, for example `openapi.json` or `swagger.yaml`, before parsing them.
+    - For a confirmed OpenAPI or Swagger JSON file, extract the documented paths, methods, parameter names, request-body content types, response codes, schema fields, and security schemes.
+    Commands:
+    - `jq -r '.paths // {} | to_entries[] | .key as $path | .value | to_entries[] | select(.key | IN("get"; "put"; "post"; "delete"; "patch"; "head"; "options")) | [$path, (.key | ascii_upcase), (.value.operationId // ""), ((.value.parameters // []) | map(.name // "") | join(",")), ((.value.requestBody.content? // {}) | keys | join(",")), ((.value.responses // {}) | keys | join(","))] | @tsv' openapi.json > openapi-operations.tsv`
+    - `jq -r '(.components.schemas // .definitions // {}) | to_entries[] | [.key, (.value.type // ""), ((.value.required // []) | join(",")), ((.value.properties // {}) | keys | join(","))] | @tsv' openapi.json > openapi-schema-fields.tsv`
+    - `jq -r '(.components.securitySchemes // .securityDefinitions // {}) | to_entries[] | [.key, (.value.type // ""), (.value.scheme // ""), (.value.in // "")] | @tsv' openapi.json > openapi-security-schemes.tsv`
+    - Convert the documented paths to absolute URLs, merge them into `all-endpoints.txt`, and record whether each operation is authenticated or potentially state-changing in `api-notes.md`. Do not automatically request every endpoint.
+    - For YAML specifications, use an installed YAML-aware parser or review the file manually; do not treat a JSON parser failure as evidence that a specification is invalid.
+    - Identify GraphQL from observed requests, JavaScript, technology fingerprints, or documentation. If introspection is explicitly allowed, use a minimal schema query against the confirmed endpoint and save the response as `graphql-schema.json`; otherwise derive operation names, variables, fragments, and types from normal application traffic, persisted-query payloads, and client code.
+    Commands:
+    - `grep -RniE 'graphql|__schema|__type|query[[:space:]]+[A-Za-z_]|mutation[[:space:]]+[A-Za-z_]|subscription[[:space:]]+[A-Za-z_]' ../../automatic-recon/javascript/js-files/ ../../automatic-recon/javascript/source-maps/ 2>/dev/null > graphql-client-leads.txt`
+    - Record GraphQL queries, mutations, subscriptions, variable names, authentication context, and evidence source in `api-notes.md`. Do not execute mutations or subscriptions solely for enumeration.
+    - Identify gRPC and protobuf services from response headers (`application/grpc`), client code, mobile applications, public `.proto` files, gateway routes, or documentation. Use server reflection only where explicitly permitted; otherwise record service and method names from passive sources in `api-notes.md`.
+    - Identify WebSocket and Socket.IO endpoints from browser developer tools, client code, and observed network traffic. Record the connection URL, handshake headers/cookies, namespaces, event names, message shapes, authentication timing, and whether an event changes state in `api-notes.md`. Do not send arbitrary events to enumerate a live service.
+    - Search confirmed specifications and client artifacts for deprecated operations, hidden tags, admin/internal paths, mass-assignment-prone request fields, identifiers, pagination controls, upload/download endpoints, webhooks, and authorization scopes. Copy leads to `interesting-endpoints.md`.
+
+5. Crawl the host again with its known context and run the JavaScript methodology on newly discovered files.
     Commands:
     - `httpx -u https://sub.target.com -title -tech-detect -status-code -follow-redirects -web-server -ip -cdn -asn > technology-httpx.txt`
     - `katana -u https://sub.target.com -d 5 -headless -js-crawl -jsluice -kf all -silent > all-endpoints.txt`
     - Run the Burp Suite crawler using authorised test accounts where applicable and save exported URLs to `all-endpoints.txt`.
     - Merge unique entries from `all-endpoints.txt` into `interesting-endpoints.md` and run `Javascript-recon.md` for newly discovered JavaScript files. Copy high-value API, authentication, and client-side findings to `api-notes.md`, `authentication.md`, and `javascript-review.md`.
 
-5. Review cloud storage.
+6. Review cloud storage.
     Commands:
     - `cd /home/g/Hacking/tools/cloud_enum && uv run python cloud_enum.py -k company_name`
     - `aws s3 ls s3://bucket-name --no-sign-request` list only a confirmed, in-scope bucket.
     - `aws s3 cp s3://bucket-name/object-name ./downloaded-object --no-sign-request` download only an authorised object to a local review directory.
     - Record confirmed buckets, objects, permissions, and scope evidence in `cloud_storage.md`.
 
-6. Perform additional public-information research for the selected host.
+7. Perform additional public-information research for the selected host.
     - Record the query, date, source URL, and relevant result in the host's `notes.md`.
     - Confirm that any discovered host, bucket, or third-party service is in scope before interacting with it.
 
-7. Enumerate endpoint and API parameters only after baselining the response and confirming the method is safe.
+8. Enumerate endpoint and API parameters only after baselining the response and confirming the method is safe.
     Commands:
     - `ffuf -w "/home/g/Hacking/hacking-map/Bug bounty methodology/Recon/wordlists/raft-large-words.txt" -u "https://sub.target.com/page?FUZZ=test" -ac -rate 20 -of json -o parameter-name-fuzz.json`
     - `ffuf -w "/home/g/Hacking/hacking-map/Bug bounty methodology/Recon/wordlists/large.txt" -u "https://sub.target.com/api" -X POST -H "Content-Type: application/json" -d '{"FUZZ":"test"}' -ac -rate 20 -of json -o api-parameter-fuzz.json` run only against an authorised, non-state-changing request.

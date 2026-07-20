@@ -75,6 +75,13 @@ target.com/
 │       └── interesting_subdomain_name/
 │           ├── all-endpoints.txt
 │           ├── interesting-endpoints.md
+│           ├── api-spec-probes.tsv
+│           ├── openapi.json
+│           ├── openapi-operations.tsv
+│           ├── openapi-schema-fields.tsv
+│           ├── openapi-security-schemes.tsv
+│           ├── graphql-client-leads.txt
+│           ├── graphql-schema.json
 │           ├── cloud_storage.md
 │           ├── authentication.md
 │           ├── authorization.md
