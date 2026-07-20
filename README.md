@@ -1,6 +1,6 @@
 ### Bug bounty methodology
 
-This is my own comprehensive bug bounty methodology for reconisance and explotation. Currently all of the `Explotation` folder is in first ai drafts. This guide is tailored to my own setup on linux mint however anyone can follow it and setup a similar environment. Refer to the setup guide to setup all the nessarsary tools.
+This is my own comprehensive bug bounty methodology for reconisance and explotation. Currently all the `Recon` folder is finished so far and Exploitation will be created soon, archived were my templates/first drafts. This guide is tailored to my own setup on Linux mint however anyone can follow it and setup a similar environment. Refer to the setup guide to setup all the nessarsary tools.
 
 ---
 
@@ -125,6 +125,18 @@ target.com/
 ├── commands.md
 └── README.md
 ```
+
+---
+### How to choose a programme
+
+There are lots of bug bounty programs out there and choosing the correct one is crucial. This section of my methodology demonstrates the best way to do so. This is not a perfect guide for picking programmes for all skill levels and is mainly targeted at people who are just begining bug bounty and may not have as advanced skills as some hunters. This is just what I personally follow.
+
+1. Find the bug bounty platform you want to hunt on (E.g HackerOne, BugCrowd, self-hosted etc). This differs on your skill but this guide will be tailed more towards HackerOne.
+2. After you select a platform, you should always opt for programs with the least resolved reports, especially aim for low recent reports.
+3. You should aviod programs with low reports and high bountys as this usually means they are very hard programs to hack.
+4. Once you have filtered by reports, you should then filter by scope. Aim for the largest scope possible. On HackerOne this means filtering by wildcards.
+5. You should only ever hunt on bountys that you can sign up to. Not being able to make an account reduces attack surface by a huge amount.
+6. Make a list of bountys that fit these requirements and pick the best one out of them.
 
 ---
 
